@@ -7,18 +7,18 @@ var validate = (function () {
      * @param cardNumber Card number as a string (e.g. "4242 4242 4242 4242")
      * @param cardType Card type as a string (e.g. "visa")
      */
-    function isValidCreditCardNumber() {
+    function isValidCreditCardNumber(cardNumber, cardType) {
         // accept only digits, dashes or spaces
         if (/[^0-9-\s]+/.test(cardNumber)) return false;
 
         cardNumber = cardNumber.replace(/\D/g, ""); // remove non-numeric characters
 
-        if( this.isEmpty( cardNumber ) || !this.isNumber(cardNumber) ){
+        if(!cardNumber) {
             return false;
         }
 
         // the card number will be valid if it has the correct length according to its type, and if it passes the Luhn Algorithm
-        return self.isValidCreditCardNumberLength(cardNumber, cardType) && self.isValidCreditCardNumberLuhnAlgorithm(cardNumber);
+        return _isValidCreditCardNumberLength(cardNumber, cardType) && _isValidCreditCardNumberLuhnAlgorithm(cardNumber);
     }
 
     /**
@@ -105,15 +105,15 @@ var validate = (function () {
             return false;
         } else {
             var maxDaysPerMonth = {
-                '1': 31,
-                '2': ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0) ? 29 : 28,  // taking leap years into account
-                '3': 31,
-                '4': 30,
-                '5': 31,
-                '6': 30,
-                '7': 31,
-                '8': 31,
-                '9': 30,
+                '01': 31,
+                '02': ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0) ? 29 : 28,  // taking leap years into account
+                '03': 31,
+                '04': 30,
+                '05': 31,
+                '06': 30,
+                '07': 31,
+                '08': 31,
+                '09': 30,
                 '10': 31,
                 '11': 30,
                 '12': 31
@@ -222,3 +222,5 @@ var validate = (function () {
         isValidPostcode: isValidPostcode
     }
 })();
+
+exports = module.exports = validate;

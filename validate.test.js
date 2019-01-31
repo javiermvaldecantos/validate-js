@@ -18,7 +18,14 @@ test('Credit card numbers are validated correctly', function() {
 });
 
 test('Dates are validated properly', function() {
-
+    expect(validate.isValidDate()).toBe(false);
+    expect(validate.isValidDate('29','02','1991')).toBe(false);
+    expect(validate.isValidDate('28','11','1991')).toBe(true);
+    expect(validate.isValidDate('29','02','1992')).toBe(true);  // leap year
+    expect(validate.isValidDate('01','01','2000')).toBe(true);
+    expect(validate.isValidDate('00','01','2001')).toBe(false); // incorrect day
+    expect(validate.isValidDate('01','4444','2009')).toBe(false);   // incorrect month
+    expect(validate.isValidDate('21','12','3000')).toBe(false); // incorrect year
 });
 
 test('Address postcodes are validated correctly', function() {
